@@ -1,7 +1,8 @@
 package Classes;
 
+import static java.lang.Math.*;
 import java.text.DecimalFormat;
-
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -35,49 +36,88 @@ public class CODT2 {
 //        aufgabe3(3 , 2, new Polynom("112"));
 //        aufgabe3(5 , 2, new Polynom("112"));
 //        aufgabe3(5 , 3, new Polynom("1032"));
-        aufgabe5(7);
-//        aufgabe5(9);
+//        aufgabe5(8, 2, 3, new Polynom("101"));
+        aufgabe5(9, 3, 2, new Polynom("101"));
     }
 
-    public static void aufgabe5(int iField) {
+    public static void aufgabe5(int iField, int base, int exp, Polynom poly) {
 
         String strFormat = " %1s ";
         String strHeader = String.format(strFormat, "\\");
         String strOut = "";
-        
-        // Addition
-        System.out.println("Addition Table:\n");
+
+        ArrayList<Polynom> polys = new ArrayList<>();
+
         for (int i = 0; i < iField; i++) {
             
+            String strNewPoly = "";
+            double tmp = (double)i;
+            
+
+                // Alle Exponenten durchlaufen
+                for (int iExp = exp; iExp >= 0; iExp--) {
+                    
+                    int x = 0;
+                    
+                    // 
+                    while ((tmp - Math.pow((double) base, (double) iExp)) >= 0) {
+                        
+                        tmp -= Math.pow((double) base, (double) iExp);
+                        x++;
+                    }
+                    
+                    strNewPoly += x;
+                    
+                }
+                
+            polys.add(new Polynom(strNewPoly));
+        
+        }
+        
+        // Addition
+        System.out.println(
+                "Addition Table:\n");
+        for (int i = 0;
+                i < iField;
+                i++) {
+
             strHeader += String.format(strFormat, i);
             strOut += String.format(strFormat, i);
-            
+
             for (int i2 = 0; i2 < iField; i2++) {
-                strOut += String.format(strFormat, (i + i2) % iField);
+                
+//                strOut += String.format(strFormat,Arithmetik.multiply(polys.get(i), polys.get(i2), poly, base).getStringValue(base));//String.format(strFormat, (i + i2) % iField);
+                strOut += String.format(strFormat, Arithmetik.add(polys.get(i), polys.get(i2), base).getStringValue(base));
             }
             strOut += "\n";
         }
-        
-        System.out.println(strHeader + "\n" +strOut);
-        
+
+        System.out.println(strHeader
+                + "\n" + strOut);
+
         // Multiplikation
         strHeader = String.format(strFormat, "\\");
         strOut = "";
-        
-        System.out.println("Multiplication Table:\n");
-        for (int i = 0; i < iField; i++) {
-            
+
+        System.out.println(
+                "Multiplication Table:\n");
+        for (int i = 0;
+                i < iField;
+                i++) {
+
             strHeader += String.format(strFormat, i);
             strOut += String.format(strFormat, i);
-            
+
             for (int i2 = 0; i2 < iField; i2++) {
-                strOut += String.format(strFormat, (i * i2) % iField);
+//                strOut += String.format(strFormat, (i * i2) % iField);
+                strOut += String.format(strFormat,Arithmetik.multiply(polys.get(i), polys.get(i2),poly, base).getStringValue(base) );
             }
             strOut += "\n";
         }
-        
-        System.out.println(strHeader + "\n" +strOut);
-        
+
+        System.out.println(strHeader
+                + "\n" + strOut);
+
     }
 
     public static void aufgabe3(long p, long d, Polynom FvonX) {

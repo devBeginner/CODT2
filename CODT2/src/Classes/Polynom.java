@@ -102,5 +102,19 @@ public class Polynom {
         return true;
 
     }
+    
+    public String getStringValue(int base){
+        
+        int val = 0; 
+        
+//        for (int i = data.size()-1 ; i >= 0 ; i--){
+        for (int i = 0 ; i < data.size() ; i++){
+            
+            val += (double)data.get(i)*(int)Math.pow(base, (double)i);
+            
+        }
+        
+        return ""+val;
+    }
 
 }
